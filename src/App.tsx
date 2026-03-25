@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Moon, Sun, Wallet, PieChart as PieChartIcon, ChevronRight, ChevronLeft, Trash2, Plus, ArrowUpRight, ArrowDownRight, Settings, Search, X } from "lucide-react";
+import { Moon, Sun, Wallet, PieChart as PieChartIcon, ChevronRight, ChevronLeft, Trash2, Plus, ArrowUpRight, ArrowDownRight, Settings, Search, X, Sparkles } from "lucide-react";
 import { CATEGORIES, CURRENCIES } from "./lib/constants";
 import { AddTransactionModal } from "./components/AddTransactionModal";
 import { ReportModal } from "./components/ReportModal";
 import { SettingsModal } from "./components/SettingsModal";
+import { AIAssistantModal } from "./components/AIAssistantModal";
 import { Card } from "./components/ui/Card";
 import { cn } from "./lib/utils";
 import { Toaster, toast } from "sonner";
@@ -27,6 +28,7 @@ export default function App() {
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = React.useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = React.useState(false);
+  const [isAIAssistantOpen, setIsAIAssistantOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (isDarkMode) {
@@ -111,6 +113,12 @@ export default function App() {
             </div>
           </div>
           <div className="flex gap-2">
+            <button
+              onClick={() => setIsAIAssistantOpen(true)}
+              className="p-2.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 shadow-sm border border-emerald-200 dark:border-emerald-800/50 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 transition-colors"
+            >
+              <Sparkles className="w-5 h-5" />
+            </button>
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
               className="p-2.5 rounded-full bg-white dark:bg-zinc-900 shadow-sm border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-emerald-500 transition-colors"
@@ -310,6 +318,13 @@ export default function App() {
         setTransactions={setTransactions}
         currency={currency}
         setCurrency={setCurrency}
+      />
+
+      <AIAssistantModal
+        isOpen={isAIAssistantOpen}
+        onClose={() => setIsAIAssistantOpen(false)}
+        transactions={transactions}
+        currencySymbol={currentCurrency}
       />
     </div>
   );
